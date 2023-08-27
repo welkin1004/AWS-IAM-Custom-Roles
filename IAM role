@@ -1,3 +1,5 @@
+//Custom policy for dedicated access to dedicated user for accesiing a specific instance & he cant see & access any other instance in account 
+
 {
     "Version": "2012-10-17",
     "Statement": [
