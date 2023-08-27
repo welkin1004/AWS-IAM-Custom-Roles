@@ -1,0 +1,55 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "TheseActionsDontSupportResourceLevelPermissions",
+            "Effect": "Allow",
+            "Action": ["ec2:Describe*"],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ThisActionSupportsResourceLevelPermissionsWithInstancesButNotWithTags",
+            "Effect": "Allow",
+            "Action": ["ec2:RunInstances"],
+            "Resource": [
+                "arn:aws:ec2:us-east-1:accountid:instance/*",
+                "arn:aws:ec2:us-east-1:accountid:key-pair/*",
+                "arn:aws:ec2:us-east-1:accountid:security-group/*",
+                "arn:aws:ec2:us-east-1:accountid:volume/*",
+                "arn:aws:ec2:us-east-1::image/ami-*"
+            ]
+        },
+        {
+            "Sid": "TheseActionsSupportResourceLevelPermissionsWithInstancesAndTags",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:StartInstances"
+            ],
+            "Resource": "arn:aws:ec2:us-east-1:accountid:instance/*",
+            "Condition": {
+                "StringEquals": {"ec2:ResourceTag/Environment": "Prod"}
+            }
+        },
+        {
+            "Sid": "AllowSecurityGroupAccess",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupIngress"
+            ],
+            "Resource": "arn:aws:ec2:us-east-1:accountid:security-group/*"
+        },
+        {
+            "Sid": "AllowSSHAccessToSpecificInstance",
+            "Effect": "Allow",
+            "Action": [
+                "ec2-instance-connect:SendSSHPublicKey",
+                "ec2-instance-connect:SendSerialConsoleSSHPublicKey"
+            ],
+            "Resource": [
+                "arn:aws:ec2:us-east-1:accountid:instance/your-instance-id"
+            ]
+        }
+    ]
+}
