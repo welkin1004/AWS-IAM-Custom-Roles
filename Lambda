@@ -1,0 +1,12 @@
+//Dedicated access on specific lambda function
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "arn:aws:lambda:your-region:your-account-id:function:your-function-name"
+    }
+  ]
+}
