@@ -1,0 +1,37 @@
+//Dedicated access to specific bucket and also find out buckets which started with prefix
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name/*",
+        "arn:aws:s3:::your-bucket-name"
+      ]
+    },
+    {
+      "Effect": "Deny",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::*"
+      ],
+      "Condition": {
+        "StringNotEqualsIfExists": {
+          "s3:prefix": [
+            "",
+            "your-bucket-name/",
+            "your-bucket-name/*"
+          ]
+        }
+      }
+    }
+  ]
+}
+
